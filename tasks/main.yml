@@ -1,0 +1,33 @@
+---
+- name: install openssh-server openssh-client
+  package:
+    name: "{{ item }}"
+    state: present
+  environment: "{{ proxy_env }}"
+  with_items:
+    - openssh-server
+    - openssh-clients
+  become: true
+  tags: sshd
+
+- name: configure /etc/ssh/ssh_config & /etc/sshd/sshd_config
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0640
+  with_items:
+    - { src: ssh.config.j2, dest: /etc/ssh/ssh_config }
+    - { src: sshd.config.j2, dest: /etc/ssh/sshd_config }
+  notify: restart sshd
+  become: true
+  tags: sshd
+
+- name: start and enable sshd service
+  service:
+    name: sshd
+    state: started
+    enabled: true
+  become: true
+  tags: sshd

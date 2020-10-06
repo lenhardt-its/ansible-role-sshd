@@ -1,0 +1,31 @@
+---
+proxy_env: {}
+ssh_client:
+  ForwardX11Trusted: true
+  GSSAPIAuthentication: true
+  SendEnv:
+  - LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+  - LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+  - LC_IDENTIFICATION LC_ALL LANGUAGE
+  - XMODIFIERS
+ssh_server:
+  AcceptEnv:
+  - LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+  - LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+  - LC_IDENTIFICATION LC_ALL LANGUAGE
+  - XMODIFIERS
+  AddressFamily: any
+  ChallengeResponseAuthentication: false
+  GSSAPIAuthentication: true
+  GSSAPICleanupCredentials: false
+  HostKey:
+  - /etc/ssh/ssh_host_rsa_key
+  PasswordAuthentication: false
+  PermitRootLogin: false
+  Port: 22
+  Protocol: 2
+  Subsystem: 'sftp internal-sftp'
+  SyslogFacility: AUTHPRIV
+  UsePAM: true
+  X11Forwarding: true
+  PrintMotd: no
