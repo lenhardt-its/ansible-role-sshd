@@ -1,12 +1,21 @@
 ---
+- name: gather operating system variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution_file_variety | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+  tags: sshd
+
 - name: install openssh-server openssh-client
   package:
-    name: "{{ item }}"
+    name: "{{ ssh_packages }}"
     state: present
   environment: "{{ proxy_env }}"
-  with_items:
-    - openssh-server
-    - openssh-clients
   become: true
   tags: sshd
 
@@ -20,13 +29,13 @@
   with_items:
     - { src: ssh.config.j2, dest: /etc/ssh/ssh_config }
     - { src: sshd.config.j2, dest: /etc/ssh/sshd_config }
-  notify: restart sshd
+  notify: restart ssh
   become: true
   tags: sshd
 
 - name: start and enable sshd service
   service:
-    name: sshd
+    name: "{{ ssh_service }}"
     state: started
     enabled: true
   become: true

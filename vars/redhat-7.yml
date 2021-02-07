@@ -1,5 +1,5 @@
 ---
-ssh_service: ssh
+ssh_service: sshd
 ssh_packages:
   - openssh-server
-  - openssh-client
+  - openssh-clients

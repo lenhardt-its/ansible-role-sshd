@@ -1,7 +1,7 @@
 ---
-- name: restart sshd
+- name: restart ssh
   service:
-    name: sshd
+    name: "{{ service_ssh }}"
     state: restarted
   become: true
   tags: sshd

@@ -18,14 +18,28 @@ ssh_server:
   ChallengeResponseAuthentication: false
   GSSAPIAuthentication: true
   GSSAPICleanupCredentials: false
+  UsePrivilegeSeparation: sandbox
   HostKey:
   - /etc/ssh/ssh_host_rsa_key
-  PasswordAuthentication: false
-  PermitRootLogin: false
+  PasswordAuthentication: no
+  PermitRootLogin: no
+  PermitEmptyPasswords: no
   Port: 22
   Protocol: 2
+  LoginGraceTime: 30
+  StrictModes: yes
+  MaxStartups: 200
   Subsystem: 'sftp internal-sftp'
   SyslogFacility: AUTHPRIV
   UsePAM: true
   X11Forwarding: true
   PrintMotd: no
+  PrintLastLog: yes
+  Ciphers: aes128-ctr,aes192-ctr,aes256-ctr
+  MACs: hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+  KexAlgorithms: diffie-hellman-group-exchange-sha256
+  PermitUserEnvironment: no
+  MaxSessions: 10
+  TCPKeepAlive: yes
+  #AllowGroups wheel sdf root onends_group
+  #AllowUsers deepak ankit
