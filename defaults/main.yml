@@ -35,7 +35,7 @@ ssh_server:
   PrintMotd: no
   PrintLastLog: yes
   Ciphers: aes128-ctr,aes192-ctr,aes256-ctr
-  #MACs: hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+  MACs: hmac-sha1,hmac-md5
   KexAlgorithms: diffie-hellman-group-exchange-sha256
   PermitUserEnvironment: no
   MaxSessions: 10
