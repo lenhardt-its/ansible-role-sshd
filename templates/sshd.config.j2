@@ -19,7 +19,7 @@
 {%     endif %}
 {%   endfor %}
 {% endif %}
-ListenAddress {{ ansible_default_ipv4.address }}
+ListenAddress 0.0.0.0
 {% if ansible_default_ipv6.address is defined %}
-ListenAddress {{ ansible_default_ipv6.address | default('') }}
+ListenAddress {{ ansible_default_ipv6.address | default('::1') }}
 {% endif %}
