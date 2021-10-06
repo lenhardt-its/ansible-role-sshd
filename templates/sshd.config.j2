@@ -19,7 +19,11 @@
 {%     endif %}
 {%   endfor %}
 {% endif %}
+{% if ssh_bind_ips is sameas true %}
 ListenAddress {{ ansible_default_ipv4.address }}
-{% if ansible_default_ipv6.address is defined %}
+{%   if ansible_default_ipv6.address is defined %}
 ListenAddress {{ ansible_default_ipv6.address | default('') }}
+{%   endif %}
+{% else %}
+ListenAddress 0.0.0.0
 {% endif %}

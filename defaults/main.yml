@@ -1,5 +1,6 @@
 ---
 proxy_env: {}
+ssh_bind_ips: false
 ssh_client:
   ForwardX11Trusted: true
   GSSAPIAuthentication: true
